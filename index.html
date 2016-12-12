@@ -324,13 +324,7 @@
       
         
           <p><strong>前言</strong></p>
-<p>很久之前就像要一个自己的博客，想在这个浩瀚的网络上，能有一个自己的小家，简单的写写文章，记录一下自己的心路历程。虽然有各种博客，但是风格都是官方定好的，完全没有自己发挥的空间。 虽然wordpress可以搭建个人博客，但是服务器空间域名等都需要钱来维护，而且wordpress使用起来也不是很爽。直到发现了githubpage和hexo。一颗躁动的心又要起航了。</p>
-<p><strong>概述</strong></p>
-<p>github： 是一个面向开源及私有软件项目的托管平台，只支持git作为唯一的版本库格式进行托管，故名GitHub 。也是众多程序员聚集的地方,目前拥有超过 900 万的开发用户。</p>
-<p>node.js： Node是一个服务端JavaScript解析器，他将改变服务器如何工作的概念。目标是帮助程序员构建可伸缩的应用程序，虽然说了这么多，我能说其实我也不会用吗 。。。</p>
-<p>git: 一款免费的开源的分布式版本控制系统，用于敏捷高效的处理任何或小或大的项目</p>
-<p>Hexo: 一款基于NODE.JS的快速、简单的博客框架，能够创建一个项目进行编辑后生成一套静态网页，比较适合个人博客的搭建。可以急速生成静态网页，支持MarkDown。</p>
-<p>github pages : 300M免费空间，资料可以自己管理，免费使用，并且快速稳定。<br>
+<p>很久之前就像要一个自己的博客，想在这个浩瀚的网络上，能有一个自己的小家，简单的写写文章，记录一下自己的心路历程。虽然有各种博客，但是风格都是官方定好的，完全没有自己发挥的空间。 虽然wordpress可以搭建个人博客，但是服务器空间域名等都需要钱来维护，而且wordpress使用起来也不是很爽。直到发现了githubpage和hexo。一颗躁动的心又要起航了。<br>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/12/12/搭建个人博客/#more" rel="contents">
@@ -451,36 +445,14 @@
 
       
         
-          
-            <p>上一篇文章中，成功的完成了博客的搭建，不得不说，就我个人来言，官方默认的主题真实太丑，作为一个追求简约，喜欢简单布局的人，真的是一种精神折磨，太让人受不了了。经过比较最终选择了精于心，简于形的Next主题。站点和主题都有配置文件_config.yml ，为了便于区分，博客根目录的配置文件我们称为站点配置，主题的配置文件我们称为主题配置文件。</p>
-<p><strong>主题替换</strong></p>
-<ol>
-<li>下载主题</li>
-</ol>
-<p>进人你博客的根目录，运行Git Bash Here 。输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/iissnan/hexo-theme-next themes/next</div></pre></td></tr></table></figure></p>
-<p>主题下载完成后，将文件夹改名为next 。</p>
-<ol>
-<li>切换主题</li>
-</ol>
-<p>打开博客根目录，找到_config.yml 。 找到 theme 字段，并将其值更改为 next。 theme 和 next 之间有空格!!</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">theme: next</div></pre></td></tr></table></figure>
-<p>保存之后，我们的主题已经替换完成了，在本地验证一下，在运行之前，先运行<em>hexo clean</em> 清楚一下缓存，运行 <em>hexo g</em> 生成一下，最后运行<em>hexo s</em> 。在浏览器输入网址，<a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a>, 验证一下效果。效果图如下：说明替换成功了。</p>
-<p><img src="http://ohzdad2hw.bkt.clouddn.com/next.png" alt=""></p>
-<p><strong>主题设定</strong></p>
-<p>NexT 有三种Scheme,他们是：</p>
-<ul>
-<li>Muse - 默认</li>
-<li>Mist - 紧凑版本</li>
-<li>Pisces - 双栏Scheme,小家碧玉似的清新</li>
-</ul>
-<p>设定方法是：</p>
-<p>切换到 next 文件夹 ， 打开_config.yml配置文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Schemes</div><div class="line">scheme: Muse</div><div class="line">#scheme: Mist</div><div class="line">#scheme: Pisces</div></pre></td></tr></table></figure>
-<p>将注释去掉就可以切换scheme了。</p>
-<p><strong>设置语言</strong></p>
-<p>站点配置文件更改语言： language: zh-Hans , 改为中文。</p>
-
-          
+          <p>上一篇文章中，成功的完成了博客的搭建，不得不说，就我个人来言，官方默认的主题真实太丑，作为一个追求简约，喜欢简单布局的人，真的是一种精神折磨，太让人受不了了。经过比较最终选择了精于心，简于形的Next主题。站点和主题都有配置文件_config.yml ，为了便于区分，博客根目录的配置文件我们称为站点配置，主题的配置文件我们称为主题配置文件。</p>
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/12/12/博客主题配置、定制/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
