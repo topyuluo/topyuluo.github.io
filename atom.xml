@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Topyuluo</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://www.github.com/topyuluo/"/>
+  <updated>2016-12-13T13:53:37.864Z</updated>
+  <id>http://www.github.com/topyuluo/</id>
+  
+  <author>
+    <name>YuLuo</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>博客主题配置、定制</title>
+    <link href="http://www.github.com/topyuluo/2016/12/12/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E3%80%81%E5%AE%9A%E5%88%B6/"/>
+    <id>http://www.github.com/topyuluo/2016/12/12/博客主题配置、定制/</id>
+    <published>2016-12-12T13:12:41.000Z</published>
+    <updated>2016-12-13T13:53:37.864Z</updated>
+    
+    <content type="html"><![CDATA[<p>上一篇文章中，成功的完成了博客的搭建，不得不说，就我个人来言，官方默认的主题真实太丑，作为一个追求简约，喜欢简单布局的人，真的是一种精神折磨，太让人受不了了。经过比较最终选择了精于心，简于形的Next主题。站点和主题都有配置文件_config.yml ，为了便于区分，博客根目录的配置文件我们称为站点配置，主题的配置文件我们称为主题配置文件。</p>
+<a id="more"></a>
+<p><strong>主题替换</strong></p>
+<ol>
+<li>下载主题</li>
+</ol>
+<p>进人你博客的根目录，运行Git Bash Here 。输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/iissnan/hexo-theme-next themes/next</div></pre></td></tr></table></figure></p>
+<p>主题下载完成后，将文件夹改名为next 。</p>
+<ol>
+<li>切换主题</li>
+</ol>
+<p>打开博客根目录，找到_config.yml 。 找到 theme 字段，并将其值更改为 next。 theme 和 next 之间有空格!!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">theme: next</div></pre></td></tr></table></figure>
+<p>保存之后，我们的主题已经替换完成了，在本地验证一下，在运行之前，先运行<em>hexo clean</em> 清楚一下缓存，运行 <em>hexo g</em> 生成一下，最后运行<em>hexo s</em> 。在浏览器输入网址，<a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a>, 验证一下效果。效果图如下：说明替换成功了。</p>
+<p><img src="http://ohzdad2hw.bkt.clouddn.com/next.png" alt=""></p>
+<p><strong>主题设定</strong></p>
+<p>NexT 有三种Scheme,他们是：</p>
+<ul>
+<li>Muse - 默认</li>
+<li>Mist - 紧凑版本</li>
+<li>Pisces - 双栏Scheme,小家碧玉似的清新</li>
+</ul>
+<p>设定方法是：</p>
+<p>切换到 next 文件夹 ， 打开_config.yml配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Schemes</div><div class="line">scheme: Muse</div><div class="line">#scheme: Mist</div><div class="line">#scheme: Pisces</div></pre></td></tr></table></figure>
+<p>将注释去掉就可以切换scheme了。</p>
+<p><strong>设置语言</strong></p>
+<p>站点配置文件更改语言： language: zh-Hans , 改为中文。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;上一篇文章中，成功的完成了博客的搭建，不得不说，就我个人来言，官方默认的主题真实太丑，作为一个追求简约，喜欢简单布局的人，真的是一种精神折磨，太让人受不了了。经过比较最终选择了精于心，简于形的Next主题。站点和主题都有配置文件_config.yml ，为了便于区分，博客根目录的配置文件我们称为站点配置，主题的配置文件我们称为主题配置文件。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="博客" scheme="http://www.github.com/topyuluo/categories/%E5%8D%9A%E5%AE%A2/"/>
+    
+    
+      <category term="主题定制" scheme="http://www.github.com/topyuluo/tags/%E4%B8%BB%E9%A2%98%E5%AE%9A%E5%88%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>搭建个人博客</title>
+    <link href="http://www.github.com/topyuluo/2016/12/12/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://www.github.com/topyuluo/2016/12/12/搭建个人博客/</id>
+    <published>2016-12-12T13:11:02.000Z</published>
+    <updated>2016-12-13T13:53:41.131Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>前言</strong></p>
+<p>很久之前就像要一个自己的博客，想在这个浩瀚的网络上，能有一个自己的小家，简单的写写文章，记录一下自己的心路历程。虽然有各种博客，但是风格都是官方定好的，完全没有自己发挥的空间。 虽然wordpress可以搭建个人博客，但是服务器空间域名等都需要钱来维护，而且wordpress使用起来也不是很爽。直到发现了githubpage和hexo。一颗躁动的心又要起航了。<br><a id="more"></a><br><strong>概述</strong></p>
+<p>github： 是一个面向开源及私有软件项目的托管平台，只支持git作为唯一的版本库格式进行托管，故名GitHub 。也是众多程序员聚集的地方,目前拥有超过 900 万的开发用户。</p>
+<p>node.js： Node是一个服务端JavaScript解析器，他将改变服务器如何工作的概念。目标是帮助程序员构建可伸缩的应用程序，虽然说了这么多，我能说其实我也不会用吗 。。。</p>
+<p>git: 一款免费的开源的分布式版本控制系统，用于敏捷高效的处理任何或小或大的项目</p>
+<p>Hexo: 一款基于NODE.JS的快速、简单的博客框架，能够创建一个项目进行编辑后生成一套静态网页，比较适合个人博客的搭建。可以急速生成静态网页，支持MarkDown。</p>
+<p>github pages : 300M免费空间，资料可以自己管理，免费使用，并且快速稳定。</p>
+<p><strong>软件下载地址传送门</strong></p>
+<p>node.js : <a href="https://nodejs.org/en/download/" target="_blank" rel="external">https://nodejs.org/en/download/</a><br>git : <a href="https://github.com/git-for-windows/git/releases/tag/v2.11.0.windows.1" target="_blank" rel="external">https://github.com/git-for-windows/git/releases/tag/v2.11.0.windows.1</a></p>
+<p><strong>环境安装</strong></p>
+<ul>
+<li>安装node.js， 我下载的是 .msi 的安装包， 软件会默认将安装路径添加到path中。</li>
+<li>安装git，如果不会安装，请自行搜索教程</li>
+</ul>
+<p><strong>本机环境</strong></p>
+<ol>
+<li>windows 8.1</li>
+<li>git版本： version 2.10.1.windows.1</li>
+<li>nodejs版本： v6.9.2</li>
+</ol>
+<p><strong>实战开始 安装 配装 使用 Hexo</strong></p>
+<p>Hexo需要的环境搭建好之后，我们开始安装hexo 。 </p>
+<p><em>安装Hexo</em> </p>
+<p>在电脑的任意位置，创建一个文件夹，文字随便命名看你喜欢了，鼠标右键，点击Git Bash Here ,输入命令即可安装 。</p>
+<ol>
+<li>npm install -g hexo </li>
+<li>npm install hexo –save </li>
+<li>hexo init </li>
+<li>npm install </li>
+<li>npm install hexo-deployer-git –save  //ERROR Deployer not found: git 安装这个插件</li>
+</ol>
+<p>安装成功的目录：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2192701-ab6dce55e8cdcf81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><strong>本地查看运行效果：</strong></p>
+<p>运行命令：</p>
+<p>hexo generate 命令简写 hexo g<br>hexo server   命令简写 hexo s </p>
+<p>浏览器运行结果：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2192701-9cd962701c4fcb58.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>在浏览器输入 <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a> , 即可看到本地的运行的效果。</p>
+<p><strong>淘宝源安装</strong></p>
+<ul>
+<li>npm install -g cnpm –registry=<a href="https://registry.npm.taobao.org" target="_blank" rel="external">https://registry.npm.taobao.org</a><br>之后的安装就是把npm install 换成 cnpm install  </li>
+</ul>
+<p>看到上面的图片，说明我们hexo本地的安装已经成功，接下来就是将我们的文件上传到github了，首先我们需要有一个github账号，直接去注册就好了，作为一个屌丝程序员，怎么可能没有github账号，之后就是设置ssh公钥，设置的方式：</p>
+<ul>
+<li>登陆账号后，鼠标点击你的头像，点击-Your profile </li>
+<li>点击左边的 ， Edit profile </li>
+<li>左边，SSH and GPG keys </li>
+<li>右边，New SSH key </li>
+<li>随便输入 title , key 文本框中，输入公钥，点击Add SSH key </li>
+</ul>
+<p><strong>创建仓库</strong></p>
+<ul>
+<li>New repository ， 创建新仓库</li>
+<li>Repository name ,这个是重点 ！！一点要填写为：你的账号名.github.io 。 </li>
+<li>完成仓库的创建 。 </li>
+</ul>
+<p>结果如下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2192701-cb79fd9e940629f1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><strong>部署到github</strong></p>
+<p>仓库创建成功以后，我们可以将本地的网页文件上传到github了，下面我们看一下具体的设置：</p>
+<p>打开,你创建文件夹的根目录 ，找到 _config.yml文件 ，在最后面添加下面的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repository: 你的仓库地址</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+<p>hexo 的配置已经完成。</p>
+<p>接下来，我们使用hexo命令将文件上传到github仓库中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo clean # 清楚缓存</div><div class="line">hexo g  # 生成静态网页至public目录</div><div class="line">hexo d  # 发布到github</div></pre></td></tr></table></figure>
+<p>效果如下图说明发布成功</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2192701-7d68f7fee415bf96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>在浏览器输入 Your-Github-Name.github.io ,就可以查看你的博客了。</p>
+<p>到这里，博客已经基本创建好了，后续会继续跟进博客主题的替换，博客样式的设置。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;前言&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;很久之前就像要一个自己的博客，想在这个浩瀚的网络上，能有一个自己的小家，简单的写写文章，记录一下自己的心路历程。虽然有各种博客，但是风格都是官方定好的，完全没有自己发挥的空间。 虽然wordpress可以搭建个人博客，但是服务器空间域名等都需要钱来维护，而且wordpress使用起来也不是很爽。直到发现了githubpage和hexo。一颗躁动的心又要起航了。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="博客" scheme="http://www.github.com/topyuluo/categories/%E5%8D%9A%E5%AE%A2/"/>
+    
+    
+      <category term="创建博客" scheme="http://www.github.com/topyuluo/tags/%E5%88%9B%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://www.github.com/topyuluo/2016/12/12/hello-world/"/>
+    <id>http://www.github.com/topyuluo/2016/12/12/hello-world/</id>
+    <published>2016-12-11T16:22:58.281Z</published>
+    <updated>2016-12-13T12:24:58.397Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.<br><a id="more"></a></p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot;&gt;GitHub&lt;/a&gt;.&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
