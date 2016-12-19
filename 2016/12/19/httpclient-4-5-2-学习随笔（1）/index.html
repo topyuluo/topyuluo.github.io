@@ -102,7 +102,7 @@ HttpClient client = new HttpClient();
 CloseableHttpClient httpclient = HttpClients.createDefault();
 
 到底该使用那种方式来创建httpclient，或者使用httpclient 又该导入">
-<meta property="og:updated_time" content="2016-12-19T14:16:32.216Z">
+<meta property="og:updated_time" content="2016-12-19T14:19:50.222Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="httpclient 4.5.2 学习随笔（1）">
 <meta name="twitter:description" content="疑惑的地方刚开始接触httpclient的同学可能会比较疑惑，因为你发现创建httpclient的方式有两种：
@@ -386,10 +386,10 @@ CloseableHttpClient httpclient = HttpClients.createDefault();
 </ol>
 <p>到底该使用那种方式来创建httpclient，或者使用httpclient 又该导入哪些包。标号1中，是commons-httpclient 版本的创建方式，标号2是 httpclient的版本。这两个版本都可以处理http请求。我查阅了一下apach的官网看到了这样的一句话：</p>
 <blockquote>
-<p>The Commons HttpClient project is now end of life, and is no longer being developed. It has been replaced by the Apache HttpComponents project in its HttpClient and HttpCore modules, which offer better performance and more flexibility.</p>
+<p>The Commons HttpClient project is now end of life, and is no longer being developed. It has been replaced by the Apache HttpComponents project in its HttpClient and HttpCore modules, which offer better performance and more flexibility.<br><a id="more"></a><br>大意是commons-httpclient项目不再提供更新和开发。看着这句话我们应该明白了，以后HttpClient client = new HttpClient() 这种创建httpclient 的方式，也应该会被我们弃用掉。新建的项目还是使用httpclient 吧。</p>
 </blockquote>
-<p>大意是commons-httpclient项目不再提供更新和开发。看着这句话我们应该明白了，以后HttpClient client = new HttpClient() 这种创建httpclient 的方式，也应该会被我们弃用掉。新建的项目还是使用httpclient 吧。</p>
-<p>之所以写这篇文档，也算是给自己做一个记录吧，httpclient4.5的版本变化还是比较大的，网络上的很多文档都是基于4.4写的，有点过时了。在学习官方文档，教程，源码的基础上，给自己留下一个学习的小脚印。<br><a id="more"></a><br><strong>序言</strong></p>
+<p>之所以写这篇文档，也算是给自己做一个记录吧，httpclient4.5的版本变化还是比较大的，网络上的很多文档都是基于4.4写的，有点过时了。在学习官方文档，教程，源码的基础上，给自己留下一个学习的小脚印。</p>
+<p><strong>序言</strong></p>
 <p>HTTP也许是当今互联网上使用的最重要的协议了，尽管java.net包提供了访问HTTP资源的基本功能，但是因为它的不够灵活，使得Httpclient的应用更加广泛。HttpClient 不是一个浏览器，它是一个客户端的HTTP通信实现库，httpclient的目标是发送和接收报文。</p>
 <p><strong>小Demo</strong><br>提供一个小demo ,看看这个httpclient到底该怎么用。</p>
 <ol>
