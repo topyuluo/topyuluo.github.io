@@ -274,6 +274,155 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.github.com/topyuluo/2016/12/19/httpclient-4-5-2-学习随笔（1）/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="YuLuo">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://ohzdad2hw.bkt.clouddn.com/timg.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Topyuluo">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Topyuluo" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/19/httpclient-4-5-2-学习随笔（1）/" itemprop="url">
+                  httpclient 4.5.2 学习随笔（1）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-19T22:13:04+08:00">
+                2016-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">-HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="疑惑的地方"><a href="#疑惑的地方" class="headerlink" title="疑惑的地方"></a>疑惑的地方</h3><p>刚开始接触httpclient的同学可能会比较疑惑，因为你发现创建httpclient的方式有两种：</p>
+<ol>
+<li><code>HttpClient client = new HttpClient();</code></li>
+<li><code>CloseableHttpClient httpclient = HttpClients.createDefault();</code></li>
+</ol>
+<p>到底该使用那种方式来创建httpclient，或者使用httpclient 又该导入哪些包。标号1中，是commons-httpclient 版本的创建方式，标号2是 httpclient的版本。这两个版本都可以处理http请求。我查阅了一下apach的官网看到了这样的一句话：</p>
+<blockquote>
+<p>The Commons HttpClient project is now end of life, and is no longer being developed. It has been replaced by the Apache HttpComponents project in its HttpClient and HttpCore modules, which offer better performance and more flexibility.</p>
+</blockquote>
+<p>大意是commons-httpclient项目不再提供更新和开发。看着这句话我们应该明白了，以后HttpClient client = new HttpClient() 这种创建httpclient 的方式，也应该会被我们弃用掉。新建的项目还是使用httpclient 吧。</p>
+<p>之所以写这篇文档，也算是给自己做一个记录吧，httpclient4.5的版本变化还是比较大的，网络上的很多文档都是基于4.4写的，有点过时了。在学习官方文档，教程，源码的基础上，给自己留下一个学习的小脚印。<br>
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/12/19/httpclient-4-5-2-学习随笔（1）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://www.github.com/topyuluo/2016/12/18/Http-协议简析/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -847,7 +996,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -855,7 +1004,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
