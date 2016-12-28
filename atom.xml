@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.github.com/topyuluo/"/>
-  <updated>2016-12-19T14:19:50.222Z</updated>
+  <updated>2016-12-28T16:13:41.492Z</updated>
   <id>http://www.github.com/topyuluo/</id>
   
   <author>
@@ -14,6 +14,70 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>httpclient 4.5.2 学习随笔（2）</title>
+    <link href="http://www.github.com/topyuluo/2016/12/29/httpclient-4-5-2-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94%EF%BC%882%EF%BC%89/"/>
+    <id>http://www.github.com/topyuluo/2016/12/29/httpclient-4-5-2-学习随笔（2）/</id>
+    <published>2016-12-28T16:12:36.000Z</published>
+    <updated>2016-12-28T16:13:41.492Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="HTML表单"><a href="#HTML表单" class="headerlink" title="HTML表单"></a>HTML表单</h3><p>许多应用需要模仿一个登陆HTML表单的过程，比如：为了登陆一个WEB应用或者提交输入的数据。Httpclient 早就为我们准备好了，提供了UrlEncodedFormEntity类来简化操作。<br>我们来看一下核心的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">List&lt;NameValuePair&gt; list = new ArrayList&lt;&gt;() ;</div><div class="line">list.add(new BasicNameValuePair(&quot;name&quot; ,&quot;zhangsan&quot;));</div><div class="line">list.add(new BasicNameValuePair(&quot;age&quot; ,&quot;18&quot;));</div><div class="line">UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(list ,Consts.UTF_8) ;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p><strong>post方法提交demo</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">import org.apache.http.Consts;</div><div class="line">import org.apache.http.HttpStatus;</div><div class="line">import org.apache.http.NameValuePair;</div><div class="line">import org.apache.http.client.entity.UrlEncodedFormEntity;</div><div class="line">import org.apache.http.client.methods.CloseableHttpResponse;</div><div class="line">import org.apache.http.client.methods.HttpPost;</div><div class="line">import org.apache.http.impl.client.CloseableHttpClient;</div><div class="line">import org.apache.http.impl.client.HttpClients;</div><div class="line">import org.apache.http.message.BasicNameValuePair;</div><div class="line">import org.apache.http.util.EntityUtils;</div><div class="line"></div><div class="line">import java.io.IOException;</div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by YuLuo on 2016/12/5.</div><div class="line"> */</div><div class="line">public class PostDemo &#123;</div><div class="line">    public static void main(String[] args) throws IOException &#123;</div><div class="line">        demo();</div><div class="line">    &#125;</div><div class="line">    public static void demo() throws IOException &#123;</div><div class="line">        //创建httpclient 实例</div><div class="line">        CloseableHttpClient httpclient = HttpClients.createDefault();</div><div class="line">        //创建post方法实例</div><div class="line">        HttpPost post = new HttpPost(&quot;http://host/.com&quot;) ;</div><div class="line"></div><div class="line">        //封装提交到服务器的参数信息</div><div class="line">        List&lt;NameValuePair&gt; list = new ArrayList&lt;&gt;() ;</div><div class="line">        list.add(new BasicNameValuePair(&quot;name&quot; ,&quot;zhangsan&quot;));</div><div class="line">        list.add(new BasicNameValuePair(&quot;age&quot; ,&quot;18&quot;));</div><div class="line">        UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(list , Consts.UTF_8) ;</div><div class="line">        //设置参数信息</div><div class="line">        post.setEntity(formEntity);</div><div class="line">        //提交post方法</div><div class="line">        CloseableHttpResponse respone = httpclient.execute(post);</div><div class="line"></div><div class="line">        int statcode = respone.getStatusLine().getStatusCode() ;</div><div class="line">        if(statcode == HttpStatus.SC_OK)&#123;</div><div class="line">            System.out.println(EntityUtils.toString(respone.getEntity()));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>解析NameValuePair </strong><br>通过查看源码，发现NameValuePair只有两个方法：</p>
+<ol>
+<li>getName()</li>
+<li>getValue()</li>
+</ol>
+<p>BasicNameValuePair作为NameValuePair的实现类，只有两个字段，Name和Value ，并且它还实现了Cloneable ，Serializable 两个接口。BasicNameValuePair 没有提供属性的setter方法。只能通过构造方法，为字段赋值。</p>
+<p><strong>内容分块</strong></p>
+<p>通过HTTP#setChunded()方法来通知HttpClient你要进行分块处理， 由Httpclient根据被传输的报文属性选择最合适的传输编码方式。当使用一些不支持分块的版本（http /1.0）时，这个值会被忽略掉。</p>
+<p><strong>Http执行上下文 context</strong></p>
+<p>最初，HTTP是被设计成无状态的，面向请求-响应协议。然而，我们在使用的过程中，经常需要一些逻辑相关的请求-响应交换来保持状态信息。为了使应用程序能够维持一个过程状态，httpclient允许HTTP请求在一个特定的执行上下文中来执行–称为HTTP上下文。</p>
+<p><em>HttpContext能够包含任意的对象，因此在两个不同的线程中共享上下文是不安全的。建议每个线程都有一个自己的上下文。</em></p>
+<p>在HTTP请求执行的过程中，HttpClient添加了下列属性到执行上下文中：</p>
+<ul>
+<li>HttpConnection 实例代表连接到目标服务器的当前连接</li>
+<li>HttpHost 实例代表连接到目标服务器的当前连接</li>
+<li>HttpRoute 实例代表了完整的连接路由</li>
+<li>HttpRequest 实例代表了当前的HTTP请求。</li>
+<li>HttpResponse 实例代表了当前的HTTP响应。</li>
+<li>RequestConfig 代表当前请求配置。</li>
+<li>java.util.List<uri> 对象代表一个含有执行请求过程中所有重定向的地址。</uri></li>
+</ul>
+<p><strong>小demo</strong><br>请求配置在最初被初始化，它将在执行上下文中一直保持，共享同一个会话的所有连续请求<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public static void contextDemo() throws IOException &#123;</div><div class="line">       CloseableHttpClient httpclient = HttpClients.createDefault();</div><div class="line">       RequestConfig config = RequestConfig</div><div class="line">                                       .custom()</div><div class="line">                                       .setConnectionRequestTimeout(3000)</div><div class="line">                                       .setConnectTimeout(3000)</div><div class="line">                                       .setSocketTimeout(3000)</div><div class="line">                                       .build();</div><div class="line">       HttpGet get = new HttpGet(&quot;http://www.baidu.com&quot;);</div><div class="line">       get.setConfig(config);</div><div class="line">       HttpClientContext context = HttpClientContext.create();</div><div class="line">       CloseableHttpResponse response = httpclient.execute(get, context);</div><div class="line">       System.out.println(EntityUtils.toString(response.getEntity()));</div><div class="line">       System.out.println(&quot;---------------------------------&quot;);</div><div class="line">       HttpGet get1 = new HttpGet(&quot;http://www.qq.com&quot;);</div><div class="line">       get1.setConfig(config);</div><div class="line">       CloseableHttpResponse res = httpclient.execute(get1, context);</div><div class="line">       System.out.println(EntityUtils.toString(res.getEntity()));</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p><strong>异常处理</strong><br>HttpClient 能够抛出两种类型的异常：</p>
+<ol>
+<li>java.io.IOException ,如socket 连接超时或被重置的异常。</li>
+<li>HttpException :标志Http请求失败的信号，如违反HTTP协议。</li>
+</ol>
+<blockquote>
+<p>I/O 错误被认为是非致命的和可以恢复的，而HTTP协议错误，则被认为是致命的而且是不能自动恢复的。</p>
+</blockquote>
+<p><strong>请求尝试处理器</strong></p>
+<p>为了能使用自定义异常的回复机制，必须要实现HttpRequestRetryHandler接口。</p>
+<p><strong>小demo</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public static void requestRetryDemo() throws IOException &#123;</div><div class="line">        CloseableHttpClient httpClient = HttpClients</div><div class="line">                .custom()</div><div class="line">                .setRetryHandler(DefaultHttpRequestRetryHandler.INSTANCE)</div><div class="line">                .build();</div><div class="line">        HttpGet get = new HttpGet(&quot;http://www.baidu.com&quot;) ;</div><div class="line">        CloseableHttpResponse response = httpClient.execute(get);</div><div class="line">        System.out.println(EntityUtils.toString(response.getEntity()));</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p><em>上例中我们使用了默认的请求重试类，默认重试次数为三次，requestSentRetryEnabled 为false，当然我们也可以自己定制,具体的参数请自行查阅源码</em></p>
+<p><strong>请求终止</strong></p>
+<p>使用HttpRequest#abort()来终止线程 ;该方法为线程安全的，可以从任意线程调用。</p>
+<p><strong>重定向处理</strong></p>
+<p>重定向的url,通过HttpContext#getRedirectLocation().获取重定向网址。</p>
+<p>参考： <a href="http://blog.csdn.net/u011179993/article/details/47123727" target="_blank" rel="external">http://blog.csdn.net/u011179993/article/details/47123727</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;HTML表单&quot;&gt;&lt;a href=&quot;#HTML表单&quot; class=&quot;headerlink&quot; title=&quot;HTML表单&quot;&gt;&lt;/a&gt;HTML表单&lt;/h3&gt;&lt;p&gt;许多应用需要模仿一个登陆HTML表单的过程，比如：为了登陆一个WEB应用或者提交输入的数据。Httpclient 早就为我们准备好了，提供了UrlEncodedFormEntity类来简化操作。&lt;br&gt;我们来看一下核心的代码：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;List&amp;lt;NameValuePair&amp;gt; list = new ArrayList&amp;lt;&amp;gt;() ;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;list.add(new BasicNameValuePair(&amp;quot;name&amp;quot; ,&amp;quot;zhangsan&amp;quot;));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;list.add(new BasicNameValuePair(&amp;quot;age&amp;quot; ,&amp;quot;18&amp;quot;));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(list ,Consts.UTF_8) ;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="-HTTP" scheme="http://www.github.com/topyuluo/categories/HTTP/"/>
+    
+    
+      <category term="HTTP" scheme="http://www.github.com/topyuluo/tags/HTTP/"/>
+    
+  </entry>
   
   <entry>
     <title>httpclient 4.5.2 学习随笔（1）</title>
