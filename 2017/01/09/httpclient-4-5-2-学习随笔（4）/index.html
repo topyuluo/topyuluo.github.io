@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="JAVA, HttpClient ,爬虫,程序员,程序媛" />
+  <meta name="keywords" content="HTTP," />
 
 
 
@@ -86,16 +86,19 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta name="description" content="代理认证是爬虫的利器，现在稍微有一点规模的网站，反爬虫程序多少都会有一个点，只要程序请求的速度稍微快了一点，本地ip 就会被干掉，httpclient 作为下载网页资源的中干力量，多数爬虫都是使用httpclient 来下载，本章我们就来看一下httpclient的代理机制。
+HTTP 认证任何用户认证的过程，都需要一系列的凭证来确定用户的身份。最简单的用户凭证可以是用户名和密码这种形式。User">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://www.github.com/topyuluo/2016/12/12/hello-world/index.html">
+<meta property="og:title" content="httpclient 4.5.2 学习随笔（4）">
+<meta property="og:url" content="http://www.github.com/topyuluo/2017/01/09/httpclient-4-5-2-学习随笔（4）/index.html">
 <meta property="og:site_name" content="Topyuluo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
-<meta property="og:updated_time" content="2016-12-13T12:24:58.397Z">
+<meta property="og:description" content="代理认证是爬虫的利器，现在稍微有一点规模的网站，反爬虫程序多少都会有一个点，只要程序请求的速度稍微快了一点，本地ip 就会被干掉，httpclient 作为下载网页资源的中干力量，多数爬虫都是使用httpclient 来下载，本章我们就来看一下httpclient的代理机制。
+HTTP 认证任何用户认证的过程，都需要一系列的凭证来确定用户的身份。最简单的用户凭证可以是用户名和密码这种形式。User">
+<meta property="og:updated_time" content="2017-01-09T14:19:16.065Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta name="twitter:title" content="httpclient 4.5.2 学习随笔（4）">
+<meta name="twitter:description" content="代理认证是爬虫的利器，现在稍微有一点规模的网站，反爬虫程序多少都会有一个点，只要程序请求的速度稍微快了一点，本地ip 就会被干掉，httpclient 作为下载网页资源的中干力量，多数爬虫都是使用httpclient 来下载，本章我们就来看一下httpclient的代理机制。
+HTTP 认证任何用户认证的过程，都需要一系列的凭证来确定用户的身份。最简单的用户凭证可以是用户名和密码这种形式。User">
 
 
 
@@ -123,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://www.github.com/topyuluo/2016/12/12/hello-world/"/>
+  <link rel="canonical" href="http://www.github.com/topyuluo/2017/01/09/httpclient-4-5-2-学习随笔（4）/"/>
 
 
 
 
 
-  <title> Hello World | Topyuluo </title>
+  <title> httpclient 4.5.2 学习随笔（4） | Topyuluo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -273,7 +276,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.github.com/topyuluo/2016/12/12/hello-world/">
+  <link itemprop="mainEntityOfPage" href="http://www.github.com/topyuluo/2017/01/09/httpclient-4-5-2-学习随笔（4）/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="YuLuo">
@@ -297,7 +300,7 @@
             
             
               
-                Hello World
+                httpclient 4.5.2 学习随笔（4）
               
             
           </h1>
@@ -310,8 +313,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-12T00:22:58+08:00">
-                2016-12-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-09T22:18:02+08:00">
+                2017-01-09
               </time>
             
 
@@ -320,6 +323,24 @@
             
           </span>
 
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">-HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -346,16 +367,48 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.<br><a id="more"></a></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
+        <p>代理认证是爬虫的利器，现在稍微有一点规模的网站，反爬虫程序多少都会有一个点，只要程序请求的速度稍微快了一点，本地ip 就会被干掉，httpclient 作为下载网页资源的中干力量，多数爬虫都是使用httpclient 来下载，本章我们就来看一下httpclient的代理机制。</p>
+<h3 id="HTTP-认证"><a href="#HTTP-认证" class="headerlink" title="HTTP 认证"></a>HTTP 认证</h3><p>任何用户认证的过程，都需要一系列的凭证来确定用户的身份。最简单的用户凭证可以是用户名和密码这种形式。UsernamePasswordCredentials这个类可以用来表示这种情况，这种凭据包含明文的用户名和密码。这个类对于HTTP标准规范中定义的认证模式来说已经足够了。<br><a id="more"></a><br><code>UsernamePasswordCredentials creds = new UsernamePasswordCredentials(&quot;username &quot; ,&quot;password&quot;)</code></p>
+<blockquote>
+<p>使用上面的语句来设置用户名密码。</p>
+</blockquote>
+<p><strong>Authentication schemes 身份认证方案</strong></p>
+<p>AutoScheme接口表示一个抽象的面向挑战/响应的认证方案。一个认证方案要支持下面的功能：</p>
+<ul>
+<li>客户端请求服务器受保护的资源，服务器会发送过来一个chanllenge(挑战），认证方案（Authentication scheme）需要解析、处理这个挑战</li>
+<li>为processed challenge提供一些属性值：认证方案的类型，和此方案需要的一些参数，这种方案适用的范围</li>
+<li>使用给定的授权信息生成授权字符串;生成http请求，用来响应服务器发送来过的授权challenge</li>
+</ul>
+<p>HttpClient的船舶有几个AuthScheme 实现：</p>
+<ul>
+<li>Basic：  在RFC 2617中该验证方案定义基本身份验证机制是不安全的，因为凭据以明文形式传输。尽管它不安全，如果与TLS / SSL加密结合使用基本身份验证方案是完全足够了。</li>
+<li>Digest。 摘要式身份验证方案在RFC 2617摘要式身份验证方案定义比基本显著更安全，更可以为那些不想通过TLS / SSL加密全程运输安全的开销这些应用的理想选择。</li>
+</ul>
+<p><strong>凭证 provider</strong></p>
+<p>凭证providers旨在维护一套用户的凭证，当需要某种特定的凭证时，providers就应该能产生这种凭证。认证的具体内容包括主机名、端口号、realm name和认证方案名。当使用凭据provider的时候，我们可以很模糊的指定主机名、端口号、realm和认证方案，不用写的很精确。因为，凭据provider会根据我们指定的内容，筛选出一个最匹配的方案。只要我们自定义的凭据provider实现了CredentialsProvider这个接口，就可以在HttpClient中使用。默认的凭据provider叫做BasicCredentialsProvider，它使用java.util.HashMap对CredentialsProvider进行了简单的实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CredentialsProvider credsProvider = new BasicCredentialsProvider();</div><div class="line">credsProvider.setCredentials(</div><div class="line">    new AuthScope(&quot;somehost&quot;, AuthScope.ANY_PORT), </div><div class="line">    new UsernamePasswordCredentials(&quot;u1&quot;, &quot;p1&quot;));</div></pre></td></tr></table></figure>
+<p><strong>HTTP认证和执行上下文</strong></p>
+<p>HttpClient依赖AuthState类去跟踪认证过程中的状态的详细信息。在Http请求过程中，HttpClient创建两个AuthState实例：一个用于目标服务器认证，一个用于代理服务器认证。如果服务器或者代理服务器需要用户的授权信息，AuthScope、AutoScheme和认证信息就会被填充到两个AuthScope实例中。通过对AutoState的检测，我们可以确定请求的授权类型，确定是否有匹配的AuthScheme，确定凭据provider根据指定的授权类型是否成功生成了用户的授权信息。</p>
+<p>在Http请求执行过程中，HttpClient会向执行上下文中添加下面的授权对象：</p>
+<ul>
+<li>Lookup对象，表示使用的认证方案。这个对象的值可以在本地上下文中进行设置，来覆盖默认值。</li>
+<li>CredentialsProvider对象，表示认证方案provider，这个对象的值可以在本地上下文中进行设置，来覆盖默认值。</li>
+<li>AuthState对象，表示目标服务器的认证状态，这个对象的值可以在本地上下文中进行设置，来覆盖默认值。</li>
+<li>AuthState对象，表示代理服务器的认证状态，这个对象的值可以在本地上下文中进行设置，来覆盖默认值。</li>
+<li>AuthCache对象，表示认证数据的缓存，这个对象的值可以在本地上下文中进行设置，来覆盖默认值。</li>
+</ul>
+<p>从版本4.1开始，HttpClient就会自动缓存验证通过的认证信息。但是为了使用这个缓存的认证信息，我们必须在同一个上下文中执行逻辑相关的请求。一旦超出该上下文的作用范围，缓存的认证信息就会失效。</p>
+<p><strong>抢先认证</strong></p>
+<p>HttpClient默认不支持抢先认证，因为一旦抢先认证被误用或者错用，会导致一系列的安全问题，比如会把用户的认证信息以明文的方式发送给未授权的第三方服务器。因此，需要用户自己根据自己应用的具体环境来评估抢先认证带来的好处和带来的风险。<br>即使如此，HttpClient还是允许我们通过配置来启用抢先认证，方法是提前填充认证信息缓存到上下文中，这样，以这个上下文执行的方法，就会使用抢先认证。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">HttpHost targetHost = new HttpHost(&quot;localhost&quot;, 80, &quot;http&quot;);</div><div class="line">CredentialsProvider credsProvider = new BasicCredentialsProvider();</div><div class="line">credsProvider.setCredentials(</div><div class="line">        //代理主机的ip和端口</div><div class="line">        new AuthScope(targetHost.getHostName(), targetHost.getPort()),</div><div class="line">        //代理主机的用户名密码</div><div class="line">        new UsernamePasswordCredentials(&quot;username&quot;, &quot;password&quot;));</div><div class="line"></div><div class="line">// Create AuthCache instance</div><div class="line">AuthCache authCache = new BasicAuthCache();</div><div class="line">// Generate BASIC scheme object and add it to the local auth cache</div><div class="line">BasicScheme basicAuth = new BasicScheme(); </div><div class="line">authCache.put(targetHost, basicAuth); //将目标的验证方案放入缓存中</div><div class="line"></div><div class="line">// Add AuthCache to the execution context</div><div class="line">HttpClientContext context = HttpClientContext.create();</div><div class="line">context.setCredentialsProvider(credsProvider); //上下文中添加认证凭证</div><div class="line">context.setAuthCache(authCache);  //上下文中加入认证缓存</div></pre></td></tr></table></figure>
+<p>在爬虫应用中，当使用代理的时候，我是喜欢将代理加载路由中，HttpClient 能够直接建立连接到目标主机，或者通过路由，但这会涉及多个中间连接–也被称为“一跳” 。HttpRoutePlanner是一个接口，它代表计算到基于执行上下文到给定目标完整路由策略。</p>
+<p><em>如果采用的是静态代理，也就是只有ip地址，和端口号的代理，上面的代码需要在改动一下，上面的内容为云代理，需要用户名和密码验证才能登陆代理服务器，有代理服务器做地址转发</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//创建代理地址实例</div><div class="line">HttpHost proxy = new HttpHost(&quot;127.0.0.1&quot;, 8087);  </div><div class="line">//创建路由 使用DefaultProxyRoutePlanner </div><div class="line">DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);</div><div class="line">//路由添加到httpclient 实例创建中  </div><div class="line">CloseableHttpClient httpClient =HttpClients.custom().setRoutePlanner(routePlanner).build();</div></pre></td></tr></table></figure>
+<blockquote>
+<p>上面为静态代理，无用户名密码验证的代理使用方式</p>
+</blockquote>
+<p>如果代理需要用户名和密码验证，则使用下面的方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">HttpRoutePlanner httpRoute = new HttpRoutePlanner() &#123;</div><div class="line">            @Override</div><div class="line">            public HttpRoute determineRoute(HttpHost target, HttpReques httpRequest, HttpContext httpContext) throws HttpException &#123;</div><div class="line"></div><div class="line">         //可以在此处添加验证的信息 。。。</div><div class="line"></div><div class="line">         return new HttpRoute(target , httpHost);</div><div class="line">     &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -376,20 +429,26 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/09/httpclient-4-5-2-学习随笔（3）/" rel="next" title="httpclient 4.5.2 学习随笔（3）">
+                <i class="fa fa-chevron-left"></i> httpclient 4.5.2 学习随笔（3）
+              </a>
             
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/12/搭建个人博客/" rel="prev" title="搭建个人博客">
-                搭建个人博客 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -536,7 +595,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-认证"><span class="nav-number">1.</span> <span class="nav-text">HTTP 认证</span></a></li></ol></div>
             
 
           </div>

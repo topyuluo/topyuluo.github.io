@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.github.com/topyuluo/"/>
-  <updated>2016-12-28T16:13:41.492Z</updated>
+  <updated>2017-01-09T14:19:16.065Z</updated>
   <id>http://www.github.com/topyuluo/</id>
   
   <author>
@@ -14,6 +14,128 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>httpclient 4.5.2 学习随笔（4）</title>
+    <link href="http://www.github.com/topyuluo/2017/01/09/httpclient-4-5-2-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94%EF%BC%884%EF%BC%89/"/>
+    <id>http://www.github.com/topyuluo/2017/01/09/httpclient-4-5-2-学习随笔（4）/</id>
+    <published>2017-01-09T14:18:02.000Z</published>
+    <updated>2017-01-09T14:19:16.065Z</updated>
+    
+    <content type="html"><![CDATA[<p>代理认证是爬虫的利器，现在稍微有一点规模的网站，反爬虫程序多少都会有一个点，只要程序请求的速度稍微快了一点，本地ip 就会被干掉，httpclient 作为下载网页资源的中干力量，多数爬虫都是使用httpclient 来下载，本章我们就来看一下httpclient的代理机制。</p>
+<h3 id="HTTP-认证"><a href="#HTTP-认证" class="headerlink" title="HTTP 认证"></a>HTTP 认证</h3><p>任何用户认证的过程，都需要一系列的凭证来确定用户的身份。最简单的用户凭证可以是用户名和密码这种形式。UsernamePasswordCredentials这个类可以用来表示这种情况，这种凭据包含明文的用户名和密码。这个类对于HTTP标准规范中定义的认证模式来说已经足够了。<br><a id="more"></a><br><code>UsernamePasswordCredentials creds = new UsernamePasswordCredentials(&quot;username &quot; ,&quot;password&quot;)</code></p>
+<blockquote>
+<p>使用上面的语句来设置用户名密码。</p>
+</blockquote>
+<p><strong>Authentication schemes 身份认证方案</strong></p>
+<p>AutoScheme接口表示一个抽象的面向挑战/响应的认证方案。一个认证方案要支持下面的功能：</p>
+<ul>
+<li>客户端请求服务器受保护的资源，服务器会发送过来一个chanllenge(挑战），认证方案（Authentication scheme）需要解析、处理这个挑战</li>
+<li>为processed challenge提供一些属性值：认证方案的类型，和此方案需要的一些参数，这种方案适用的范围</li>
+<li>使用给定的授权信息生成授权字符串;生成http请求，用来响应服务器发送来过的授权challenge</li>
+</ul>
+<p>HttpClient的船舶有几个AuthScheme 实现：</p>
+<ul>
+<li>Basic：  在RFC 2617中该验证方案定义基本身份验证机制是不安全的，因为凭据以明文形式传输。尽管它不安全，如果与TLS / SSL加密结合使用基本身份验证方案是完全足够了。</li>
+<li>Digest。 摘要式身份验证方案在RFC 2617摘要式身份验证方案定义比基本显著更安全，更可以为那些不想通过TLS / SSL加密全程运输安全的开销这些应用的理想选择。</li>
+</ul>
+<p><strong>凭证 provider</strong></p>
+<p>凭证providers旨在维护一套用户的凭证，当需要某种特定的凭证时，providers就应该能产生这种凭证。认证的具体内容包括主机名、端口号、realm name和认证方案名。当使用凭据provider的时候，我们可以很模糊的指定主机名、端口号、realm和认证方案，不用写的很精确。因为，凭据provider会根据我们指定的内容，筛选出一个最匹配的方案。只要我们自定义的凭据provider实现了CredentialsProvider这个接口，就可以在HttpClient中使用。默认的凭据provider叫做BasicCredentialsProvider，它使用java.util.HashMap对CredentialsProvider进行了简单的实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CredentialsProvider credsProvider = new BasicCredentialsProvider();</div><div class="line">credsProvider.setCredentials(</div><div class="line">    new AuthScope(&quot;somehost&quot;, AuthScope.ANY_PORT), </div><div class="line">    new UsernamePasswordCredentials(&quot;u1&quot;, &quot;p1&quot;));</div></pre></td></tr></table></figure>
+<p><strong>HTTP认证和执行上下文</strong></p>
+<p>HttpClient依赖AuthState类去跟踪认证过程中的状态的详细信息。在Http请求过程中，HttpClient创建两个AuthState实例：一个用于目标服务器认证，一个用于代理服务器认证。如果服务器或者代理服务器需要用户的授权信息，AuthScope、AutoScheme和认证信息就会被填充到两个AuthScope实例中。通过对AutoState的检测，我们可以确定请求的授权类型，确定是否有匹配的AuthScheme，确定凭据provider根据指定的授权类型是否成功生成了用户的授权信息。</p>
+<p>在Http请求执行过程中，HttpClient会向执行上下文中添加下面的授权对象：</p>
+<ul>
+<li>Lookup对象，表示使用的认证方案。这个对象的值可以在本地上下文中进行设置，来覆盖默认值。</li>
+<li>CredentialsProvider对象，表示认证方案provider，这个对象的值可以在本地上下文中进行设置，来覆盖默认值。</li>
+<li>AuthState对象，表示目标服务器的认证状态，这个对象的值可以在本地上下文中进行设置，来覆盖默认值。</li>
+<li>AuthState对象，表示代理服务器的认证状态，这个对象的值可以在本地上下文中进行设置，来覆盖默认值。</li>
+<li>AuthCache对象，表示认证数据的缓存，这个对象的值可以在本地上下文中进行设置，来覆盖默认值。</li>
+</ul>
+<p>从版本4.1开始，HttpClient就会自动缓存验证通过的认证信息。但是为了使用这个缓存的认证信息，我们必须在同一个上下文中执行逻辑相关的请求。一旦超出该上下文的作用范围，缓存的认证信息就会失效。</p>
+<p><strong>抢先认证</strong></p>
+<p>HttpClient默认不支持抢先认证，因为一旦抢先认证被误用或者错用，会导致一系列的安全问题，比如会把用户的认证信息以明文的方式发送给未授权的第三方服务器。因此，需要用户自己根据自己应用的具体环境来评估抢先认证带来的好处和带来的风险。<br>即使如此，HttpClient还是允许我们通过配置来启用抢先认证，方法是提前填充认证信息缓存到上下文中，这样，以这个上下文执行的方法，就会使用抢先认证。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">HttpHost targetHost = new HttpHost(&quot;localhost&quot;, 80, &quot;http&quot;);</div><div class="line">CredentialsProvider credsProvider = new BasicCredentialsProvider();</div><div class="line">credsProvider.setCredentials(</div><div class="line">        //代理主机的ip和端口</div><div class="line">        new AuthScope(targetHost.getHostName(), targetHost.getPort()),</div><div class="line">        //代理主机的用户名密码</div><div class="line">        new UsernamePasswordCredentials(&quot;username&quot;, &quot;password&quot;));</div><div class="line"></div><div class="line">// Create AuthCache instance</div><div class="line">AuthCache authCache = new BasicAuthCache();</div><div class="line">// Generate BASIC scheme object and add it to the local auth cache</div><div class="line">BasicScheme basicAuth = new BasicScheme(); </div><div class="line">authCache.put(targetHost, basicAuth); //将目标的验证方案放入缓存中</div><div class="line"></div><div class="line">// Add AuthCache to the execution context</div><div class="line">HttpClientContext context = HttpClientContext.create();</div><div class="line">context.setCredentialsProvider(credsProvider); //上下文中添加认证凭证</div><div class="line">context.setAuthCache(authCache);  //上下文中加入认证缓存</div></pre></td></tr></table></figure>
+<p>在爬虫应用中，当使用代理的时候，我是喜欢将代理加载路由中，HttpClient 能够直接建立连接到目标主机，或者通过路由，但这会涉及多个中间连接–也被称为“一跳” 。HttpRoutePlanner是一个接口，它代表计算到基于执行上下文到给定目标完整路由策略。</p>
+<p><em>如果采用的是静态代理，也就是只有ip地址，和端口号的代理，上面的代码需要在改动一下，上面的内容为云代理，需要用户名和密码验证才能登陆代理服务器，有代理服务器做地址转发</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//创建代理地址实例</div><div class="line">HttpHost proxy = new HttpHost(&quot;127.0.0.1&quot;, 8087);  </div><div class="line">//创建路由 使用DefaultProxyRoutePlanner </div><div class="line">DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);</div><div class="line">//路由添加到httpclient 实例创建中  </div><div class="line">CloseableHttpClient httpClient =HttpClients.custom().setRoutePlanner(routePlanner).build();</div></pre></td></tr></table></figure>
+<blockquote>
+<p>上面为静态代理，无用户名密码验证的代理使用方式</p>
+</blockquote>
+<p>如果代理需要用户名和密码验证，则使用下面的方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">HttpRoutePlanner httpRoute = new HttpRoutePlanner() &#123;</div><div class="line">            @Override</div><div class="line">            public HttpRoute determineRoute(HttpHost target, HttpReques httpRequest, HttpContext httpContext) throws HttpException &#123;</div><div class="line"></div><div class="line">         //可以在此处添加验证的信息 。。。</div><div class="line"></div><div class="line">         return new HttpRoute(target , httpHost);</div><div class="line">     &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;代理认证是爬虫的利器，现在稍微有一点规模的网站，反爬虫程序多少都会有一个点，只要程序请求的速度稍微快了一点，本地ip 就会被干掉，httpclient 作为下载网页资源的中干力量，多数爬虫都是使用httpclient 来下载，本章我们就来看一下httpclient的代理机制。&lt;/p&gt;
+&lt;h3 id=&quot;HTTP-认证&quot;&gt;&lt;a href=&quot;#HTTP-认证&quot; class=&quot;headerlink&quot; title=&quot;HTTP 认证&quot;&gt;&lt;/a&gt;HTTP 认证&lt;/h3&gt;&lt;p&gt;任何用户认证的过程，都需要一系列的凭证来确定用户的身份。最简单的用户凭证可以是用户名和密码这种形式。UsernamePasswordCredentials这个类可以用来表示这种情况，这种凭据包含明文的用户名和密码。这个类对于HTTP标准规范中定义的认证模式来说已经足够了。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="-HTTP" scheme="http://www.github.com/topyuluo/categories/HTTP/"/>
+    
+    
+      <category term="HTTP" scheme="http://www.github.com/topyuluo/tags/HTTP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>httpclient 4.5.2 学习随笔（3）</title>
+    <link href="http://www.github.com/topyuluo/2017/01/09/httpclient-4-5-2-%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94%EF%BC%883%EF%BC%89/"/>
+    <id>http://www.github.com/topyuluo/2017/01/09/httpclient-4-5-2-学习随笔（3）/</id>
+    <published>2017-01-09T14:14:10.000Z</published>
+    <updated>2017-01-09T14:17:21.256Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="连接管理"><a href="#连接管理" class="headerlink" title="连接管理"></a>连接管理</h2><p>两个主机之间建立的过程是很复杂的，包括了两个终端之间许多数据包的交换，会消耗掉大量的时间。对于很小的HTTP报文传输，TCP/IP的握手环节也是必不可少的。如果已有的链接能够重复使用，来执行多个请求，将会加大程序的数据吞吐量。HttpClient完全地支持连接持久化。</p>
+<p><strong>连接路由</strong></p>
+<p>HttpClient能够直接建立连接到目标主机，或者通过路由，但这会涉及多个中间连接–也被称为“一跳”。HttpClient 区分连接路由plain,tunneled和laryed。连接到目标主机的隧道使用多个中间代理，被称为代理链。</p>
+<ul>
+<li>直接连接到目标主机或仅仅有一个代理的是plain路由</li>
+<li>通过一个代理或者代理链连到目标主机是tunneled路由，没有代理的路由不是tunneled路由</li>
+<li>通过已有连接加上协议分层是 layered<a id="more"></a>
+<strong>连接管理器</strong></li>
+</ul>
+<p>HTTP连接是复杂的，有状态的，非县城安全的对象。 HTTP连接 一次仅只能有一个执行线程来使用，HttpClient 采用一个特殊实体来管理访问HTTP连接，这被称为HTTP连接管理器，ClientConnectionManager 接口就是代表。HTTP连接管理器的目的是作为工厂创建新的HTTP连接，管理持久连接的生命周期和同步访问持久连接。内部的HTTP连接管理器使用OperatedClientConnection实例，这个实例为真正的连接扮演了一个代理，来管理连接状态和控制I/O操作执行。如果一个管理的连接被释放或者被使用者明确地关闭，潜在的连接就会从它的代理分离，退回到管理中。</p>
+<ul>
+<li>BasicHttpClientConnectionManager 是一个简单的连接管理器，它保持一次只有一个连接，尽管这个方法是线程安全的，它也应该一次使用一个县城。如果连接已经被分配，将会抛出java.lang.IllegalStateException异常，连接管理器应该在EJB容器中实现。</li>
+</ul>
+<p><strong>连接池管理器 Pool Connection Manager</strong></p>
+<p>PoolingHttpClientConnectionManager 是一个管理客户端连接更复杂的实现。它为执行多线程的连接请求提供服务。对于每个基本的路由，连接都是池管理的。对于路由的请求，连接器在池中有可用的持久性连接，将被从池中取出连接服务，而不是创建一个新的连接。对每个基本路由，PoolingHttpClientConnectionManager保持着一个最大限制的连接数。使用HttpClient.close() 释放连接。 当使用PoolingClientConnectionManager 时可以使用多线程来同时执行多个请求。如果池中没有可用的连接，请求将会被阻塞，直到有可用的连接。如果在一定的时间内不能被响应，将会抛出ConnectionPoolTimeoutException异常。</p>
+<p><strong>Socket 工厂</strong></p>
+<p>HTTP 连接内部使用java.net.Socket 来传输数据，依靠ConnectionSocketFactory接口来创建、初始化和连接socket。PlainConnectionSocketFactory是创建、初始化普通socket的工厂。扩展ConnectionSocketFactory 的类还有LayeredConnectionSocketFactory、SSLConnectionSocketFactory （安全套接字创建工厂）。</p>
+<p><strong>代理配置</strong></p>
+<p>尽管HTTPClient 了解复杂的路由模式和路由链，但它指支持简单的重定向或者一跳代理连接。你也可以实现一个自定义的RoutePlanner,来实现一个完整控制HTTP路由计算的处理器。</p>
+<p><strong>Cookie</strong></p>
+<p>Cookie 是HTTP代理和目标服务器可以交流保持会话的状态信息的令牌或小的数据包。创建方式：<br><code>CookieStore cookieStore = new BasicCookieStore() ;</code> 可以将cookie设置在上下文中，这样服务器就可以识辨多次请求来自同一个客户端。BasicCookieStore 使用java.util.TreeSet 的简单实现。</p>
+<ul>
+<li>Lookup 实例代表了真实的cookie详细记录，这个属性的值设置在本地上下文中，优先于默认的</li>
+<li>CookieSpec 实例代表了真实的cookie规范</li>
+<li>CookieOrigins 实例代表了当前的源服务器的详情</li>
+<li>CookieStore 实例代表了当前cookie store ,这个属性的值设置在本地上下文中而优先于默认</li>
+</ul>
+<p>通过下面的代码设置cookie :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">CookieStore cookie = new BasicCookieStore() ;</div><div class="line">HttpClientContext httpClientContext = HttpClientContext.create();</div><div class="line">httpClientContext.setCookieStore(cookie);</div></pre></td></tr></table></figure>
+<p>没有什么使用写一遍代码解决不了的，一遍不行那就写两边，上面说了这么多，肯定蒙蔽了，好了我们直接上代码，我们看一下用上面的内容如何来组装程序，组装成要给一个可以多次请求的demo。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">public class HttpClientUtils &#123;</div><div class="line">    private final HttpClientContext context = new HttpClientContext() ;  //初始化上下文实例</div><div class="line">    private final HttpClientConnectionManager manager = builderPoolConnectionManager() ;  //定义连接池管理变量</div><div class="line"></div><div class="line">    public HttpClientUtils()&#123;</div><div class="line">        CookieStore cookieStore = new BasicCookieStore() ;</div><div class="line">        context.setCookieStore(cookieStore);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public HttpClientConnectionManager builderPoolConnectionManager()&#123;</div><div class="line">        final SSLContext context = SSLContexts.createSystemDefault();</div><div class="line">        final HostnameVerifier verifier = new DefaultHostnameVerifier() ;</div><div class="line">        //自定义注册器，既可以发送http请求，也可以发送https请求</div><div class="line">        final Registry&lt;ConnectionSocketFactory&gt; register = RegistryBuilder.&lt;ConnectionSocketFactory&gt;create()</div><div class="line">                                                                        .register(&quot;http&quot; , PlainConnectionSocketFactory.INSTANCE)</div><div class="line">                                                                        .register(&quot;https&quot; , new SSLConnectionSocketFactory( context ,verifier))</div><div class="line">                                                                        .build() ;</div><div class="line"></div><div class="line">        PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = new PoolingHttpClientConnectionManager(register);</div><div class="line">        poolingHttpClientConnectionManager.setMaxTotal(200);  //设置连接池的最大连接数</div><div class="line">        poolingHttpClientConnectionManager.setDefaultMaxPerRoute(poolingHttpClientConnectionManager.getMaxTotal());  //一个路由的最大连接数</div><div class="line">        return poolingHttpClientConnectionManager ;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public HttpClient buildHttpClient()&#123;</div><div class="line">        RequestConfig config = RequestConfig.custom()</div><div class="line">                                    .setConnectionRequestTimeout(3000)  //从池中获取请求的时间</div><div class="line">                                    .setConnectTimeout(2000)   //连接到服务器的时间</div><div class="line">                                    .setSocketTimeout(5000).build(); //读取信息时间</div><div class="line"></div><div class="line">          //如果使用了代理，请打开注释</div><div class="line">//        HttpHost proxy = new HttpHost(&quot;127.0.0.1&quot; , 2924) ;</div><div class="line">//        HttpRoutePlanner httpRoutePlanner = new HttpRoutePlanner() &#123;</div><div class="line">//            @Override</div><div class="line">//            public HttpRoute determineRoute(HttpHost httpHost, HttpRequest httpRequest, HttpContext httpContext) throws HttpException &#123;</div><div class="line">//                return new HttpRoute(httpHost ,proxy);</div><div class="line">//            &#125;</div><div class="line">//        &#125;;</div><div class="line">        CloseableHttpClient build = HttpClients.custom()</div><div class="line">                .setRetryHandler(DefaultHttpRequestRetryHandler.INSTANCE)</div><div class="line">                .setDefaultRequestConfig(config)</div><div class="line">                .setConnectionManagerShared(true)</div><div class="line">                .setConnectionManager(manager)</div><div class="line">//                .setRoutePlanner(httpRoutePlanner)  设置路由</div><div class="line">                .build();</div><div class="line"></div><div class="line">        return build ;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws IOException &#123;</div><div class="line">        HttpClientUtils utils = new HttpClientUtils() ;</div><div class="line">        HttpClient httpClient = utils.buildHttpClient();</div><div class="line">        HttpGet get = new HttpGet(&quot;http://www.qq.com&quot;);</div><div class="line">        HttpResponse response = httpClient.execute(get, utils.context);</div><div class="line">        System.out.println(EntityUtils.toString(response.getEntity() , Consts.UTF_8));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;连接管理&quot;&gt;&lt;a href=&quot;#连接管理&quot; class=&quot;headerlink&quot; title=&quot;连接管理&quot;&gt;&lt;/a&gt;连接管理&lt;/h2&gt;&lt;p&gt;两个主机之间建立的过程是很复杂的，包括了两个终端之间许多数据包的交换，会消耗掉大量的时间。对于很小的HTTP报文传输，TCP/IP的握手环节也是必不可少的。如果已有的链接能够重复使用，来执行多个请求，将会加大程序的数据吞吐量。HttpClient完全地支持连接持久化。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;连接路由&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;HttpClient能够直接建立连接到目标主机，或者通过路由，但这会涉及多个中间连接–也被称为“一跳”。HttpClient 区分连接路由plain,tunneled和laryed。连接到目标主机的隧道使用多个中间代理，被称为代理链。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;直接连接到目标主机或仅仅有一个代理的是plain路由&lt;/li&gt;
+&lt;li&gt;通过一个代理或者代理链连到目标主机是tunneled路由，没有代理的路由不是tunneled路由&lt;/li&gt;
+&lt;li&gt;通过已有连接加上协议分层是 layered
+    
+    </summary>
+    
+      <category term="-HTTP" scheme="http://www.github.com/topyuluo/categories/HTTP/"/>
+    
+    
+      <category term="HTTP" scheme="http://www.github.com/topyuluo/tags/HTTP/"/>
+    
+  </entry>
   
   <entry>
     <title>httpclient 4.5.2 学习随笔（2）</title>
